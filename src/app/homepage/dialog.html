@@ -1,0 +1,55 @@
+<h1 mat-dialog-title class="mat-headline custom-title">Minesweeper Rules</h1>
+<mat-dialog-content class="mat-typography custom-content">
+    <h3>Objective and basic concepts</h3>
+    <p>The objective in Minesweeper is to find and mark all the mines hidden under the squares, in the shortest
+        time possible. This is done by clicking on the squares to open them. Each square will have one of the
+        following:
+    </p>
+    <ol>
+        <li>A mine, and if you click on it you'll lose the game.</li>
+        <li>A number, which tells you how many of its adjacent squares have mines in them.</li>
+        <li>Nothing. In this case you know that none of the adjacent squares have mines, and they will be
+            automatically
+            opened as well.</li>
+    </ol>
+    <p>It is guaranteed that the first square you open won't contain a mine, so you can start by clicking any
+        square.
+        Often you'll hit on an empty square on the first try and then you'll open up a few adjacent squares as well,
+        which makes it easier to continue. Then it's basically just looking at the numbers shown, and figuring out
+        where
+        the mines are.</p>
+    <h3>Gameplay</h3>
+    <p>There are essentially five actions you can take in Minesweeper:</p>
+    <ol>
+        <li>Open a square. This is done simply by left clicking on a square.</li>
+        <li>Marking a square as a mine. This is done by right clicking on a square. A little flag icon will show up
+            there.</li>
+        <li>Clear any marks. Again, right click on the square. Right clicking cycles through the following states:
+            Flag
+            and Clear.</li>
+        <li>Opening all remaining adjacent squares to a number square. If for example you have a square with the
+            number
+            1 and you have already marked one mine in one of the adjacent squares you can double click on the 1
+            square
+            and the remaining adjacent squares will all be opened. This can save a lot of time while trying to
+            quickly
+            clear out squares. If you press on a number where not all adjacent mines have been marked, e.g. the
+            number
+            is 3 and you've only flagged one adjacent square, then the squares will not be opened, to prevent you
+            from
+            accidentally clicking on a number and blowing yourself up!</li>
+    </ol>
+
+    <h3>Winning</h3>
+    <p>You've won the game when you've opened all squares that don't contain a mine. If you've opened all the
+        empty/nr
+        squares but haven't flagged the mine squares remaining, they will be auto-flagged and you have won. So,
+        essentially flagging is not required, it's only there to help you keep track of where you think the mines
+        are.
+        The real way to win is open all the non-mine squares. This can be used to gain a tiny bit of speed if you're
+        trying to improve your time :)</p>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="custom-actions">
+    <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

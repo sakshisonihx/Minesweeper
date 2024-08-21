@@ -1,0 +1,30 @@
+.container {
+    height: 100vh;
+}
+
+.item {
+    text-decoration: none;
+}
+
+.item:hover {
+    background-color: #076f84;
+    padding-left: 2rem;
+    color: whitesmoke !important
+}
+
+.active {
+    background-color: #0baccc;
+    padding-left: 2rem;
+    color: whitesmoke !important
+}
+
+.position2 {
+    position: absolute;
+    top: 5%;
+    right: 0%;
+    transform: translate(-50%);
+}
+
+.custom-dialog-container>mat-dialog-content {
+    background-color: red;
+}

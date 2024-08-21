@@ -1,0 +1,43 @@
+.advance {
+    height: 1.1rem;
+    width: 1.1rem;
+    font-size: 1rem;
+}
+
+.intermediate {
+    height: 2rem;
+    width: 2rem;
+    font-size: 2rem;
+}
+
+.beginner {
+    height: 3.5rem;
+    width: 3.5rem;
+    font-size: 3rem;
+}
+
+.cell {
+    text-align: center;
+    cursor: pointer;
+    background-color: #edf6fc;
+    border-radius: 6px;
+}
+
+.revealed {
+    background-color: #d8e1e8;
+}
+
+.mine {
+    background-color: #d9515e;
+}
+
+.no-select {
+    user-select: none;
+    /* For modern browsers */
+    -webkit-user-select: none;
+    /* For WebKit-based browsers (Safari, Chrome) */
+    -moz-user-select: none;
+    /* For Firefox */
+    -ms-user-select: none;
+    /* For Internet Explorer/Edge */
+}
