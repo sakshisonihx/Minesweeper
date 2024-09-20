@@ -1,4 +1,3 @@
-<app-click-blocker *ngIf="isBlocking"></app-click-blocker>
 <div id="gameboard" class="grid gap-1">
     <div *ngFor="let row of board; let i=index">
         <div *ngFor="let cell of row; let j=index" [class.revealed]="cell.revealed" (dblclick)="onDoubleClick(i,j)"

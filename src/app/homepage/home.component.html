@@ -1,5 +1,5 @@
 <div class="flex flex-row align-items-center container">
-        <div [class.w-3]="this.currentRoute!=='advance'" [class.w-2]="this.currentRoute==='advance'">
+        <div class="w-2">
                 <div><a class="item text-700 text-4xl py-3 pr-4" routerLink="/beginner"
                                 [class.active]="this.currentRoute==='beginner'"
                                 (click)="onClick('beginner')">Beginner</a>
@@ -11,11 +11,51 @@
                 <div><a class="item text-700 text-4xl py-3 pr-4" routerLink="/advance" (click)="onClick('advance')"
                                 [class.active]="this.currentRoute==='advance'">Advance</a></div>
         </div>
-        <div class="w-9"><router-outlet></router-outlet></div>
+
+        <div class="flex flex-row justify-content-center" [class.w-8]="this.currentRoute!=='advance'"
+                [class.w-9]="this.currentRoute==='advance'"><router-outlet></router-outlet></div>
+        <div [class.w-2]="this.currentRoute!=='advance'" [class.w-1]="this.currentRoute==='advance'">
+                <div class="text-700 text-4xl py-5 text-right flex flex-row align-items-center justify-content-end">
+                        <div class="pr-2">{{ currentTime }}</div>
+                        <div class="pr-1"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 102.85 122.88"
+                                        style="enable-background:new 0 0 102.85 122.88" xml:space="preserve" width="40">
+                                        <style type="text/css">
+                                                .st0 {
+                                                        fill-rule: evenodd;
+                                                        clip-rule: evenodd;
+                                                        fill: #13829B;
+                                                }
+                                        </style>
+                                        <g>
+                                                <path class="st0"
+                                                        d="M56.91,20.32C67.15,21.4,76.5,25.5,84.05,31.7l5.21-5.44c1.06-1.11,2.84-1.13,3.95-0.06l3.5,3.4 c1.1,1.07,1.12,2.84,0.06,3.94l-5.35,5.58c7.15,8.83,11.44,20.08,11.44,32.32c0,28.4-23.03,51.43-51.43,51.43 C23.03,122.88,0,99.85,0,71.45C0,58.63,4.7,46.9,12.46,37.89l-6.02-5.66c-1.12-1.05-1.15-2.83-0.09-3.94l3.37-3.53 c1.06-1.11,2.83-1.14,3.94-0.09l6.41,6.03c7.81-6.02,17.39-9.84,27.83-10.54V9h-9.9c-1.32,0-2.4-1.08-2.4-2.4V2.4 c0-1.32,1.08-2.4,2.4-2.4h28.8c1.32,0,2.4,1.08,2.4,2.4v4.2c0,1.32-1.08,2.4-2.4,2.4h-9.9V20.32L56.91,20.32z M47.24,52.63h4.39 c0.8,0,1.46,0.66,1.46,1.46v18.35h13.51c0.8,0,1.46,0.66,1.46,1.46v4.39c0,0.8-0.66,1.46-1.46,1.46H45.78V77.6v-5.16V54.09 C45.78,53.28,46.44,52.63,47.24,52.63L47.24,52.63z M51.43,29.69c23.06,0,41.76,18.7,41.76,41.76c0,23.06-18.7,41.76-41.76,41.76 c-23.06,0-41.76-18.7-41.76-41.76C9.67,48.39,28.37,29.69,51.43,29.69L51.43,29.69z" />
+                                        </g>
+                                </svg></div>
+                </div>
+                <div class="text-700 text-4xl py-5 text-right flex flex-row align-items-center justify-content-end">
+                        <div class="pr-2">{{ flagCount }}</div>
+                        <div class="pr-3"><svg viewBox="50 200 600 700" xmlns="http://www.w3.org/2000/svg"
+                                        xmlns:xlink="http://www.w3.org/1999/xlink" width="60">
+                                        <linearGradient id="a" gradientUnits="userSpaceOnUse" x1="270" x2="544.7680195"
+                                                y1="447.77240750552" y2="447.77240750552">
+                                                <stop offset="0" stop-color="#99b000" />
+                                                <stop offset="1" stop-color="#a9bc24" />
+                                        </linearGradient>
+                                        <path d="m189.14485 322.27005h400v400h-400z" fill="none" />
+                                        <g transform="matrix(1.0810812 0 0 1.0810812 -36.430044 -49.436041)">
+                                                <rect fill="#4e505d" height="369.99997" ry="10" width="20" x="240"
+                                                        y="344.36221" />
+                                                <path d="m278.86348 367.01345c4.76413-1.21874 86.2185-23.04561 131.71778 0 45.49929 23.04561 125.32327 0 125.32327 0 4.83203-1.17515 8.86349 3.95311 8.86349 8.86348v141.81576c0 4.91037-3.84232 7.20158-8.86349 8.86348 0 0-87.77561 14.41301-125.86148 0s-84.83342-20.61783-131.17957 0c-4.48644 1.99587-8.86348-3.95311-8.86348-8.86348v-141.81576c0-4.91037 4.1063-7.64652 8.86348-8.86348z"
+                                                        fill="url(#a)" />
+                                        </g>
+                                </svg></div>
+                </div>
+        </div>
 </div>
 <!-- <button mat-button >. -->
-<svg class="position2" (click)="openDialog()" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" height="100"
-        width="100" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 306.257 306.257" xml:space="preserve">
+<svg class="position2" (click)="openDialog()" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" height="75"
+        width="75" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 306.257 306.257" xml:space="preserve">
         <g>
                 <path style="fill:#51B3DA;"
                         d="M274.968,136.765l23.788-21.476c-7.938-19.165-7.959-19.214-15.897-38.379l-32.006,1.635
@@ -65,4 +105,13 @@
                 </g>
         </g>
 </svg>
-<!-- </button> -->
+<!-- <button *ngIf="gameStatus">Restart</button> -->
+<svg (click)="restart()" class="position3" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="75" height="75"
+        viewBox="0 0 40 40">
+        <path fill="#51B3DA"
+                d="M23.596,2.871v4.444c5.533,1.566,9.589,6.65,9.589,12.684c0,7.282-5.903,13.185-13.185,13.185 S6.815,27.282,6.815,20c0-4.897,2.671-9.168,6.635-11.44l3.05,3.05V2.5H7.39l2.935,2.935C5.614,8.57,2.5,13.916,2.5,20 c0,9.665,7.835,17.5,17.5,17.5S37.5,29.665,37.5,20C37.5,11.568,31.536,4.53,23.596,2.871z">
+        </path>
+        <path fill="#13829B"
+                d="M20,37.986c-9.918,0-17.987-8.068-17.987-17.986c0-5.826,2.813-11.252,7.555-14.634L6.216,2.014 h10.771v10.771l-3.614-3.613C9.619,11.472,7.302,15.587,7.302,20c0,7.002,5.696,12.698,12.698,12.698S32.698,27.002,32.698,20 c0-5.654-3.797-10.678-9.235-12.216l-0.354-0.101V2.272l0.586,0.122C31.976,4.125,37.987,11.529,37.987,20 C37.987,29.918,29.918,37.986,20,37.986z M8.565,2.986l2.524,2.525L10.594,5.84C5.831,9.011,2.987,14.304,2.987,20 c0,9.381,7.632,17.014,17.013,17.014S37.013,29.381,37.013,20c0-7.811-5.403-14.663-12.931-16.52v3.472 c5.665,1.771,9.589,7.083,9.589,13.048c0,7.538-6.133,13.671-13.672,13.671S6.328,27.538,6.328,20 c0-4.885,2.636-9.43,6.88-11.862l0.323-0.186l2.482,2.482V2.986H8.565z">
+        </path>
+</svg>

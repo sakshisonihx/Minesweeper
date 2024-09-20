@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +10,12 @@ export class AppComponent implements OnInit {
   show = true;
   constructor(private route: Router) { }
   ngOnInit() {
-    this.route.navigate([''])
+    this.route.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        // Check if the current route is exactly the root ('/')
+        this.show = event.url === '/';
+      }
+    });
   }
   navigateTo() {
     this.route.navigate(['\home']);

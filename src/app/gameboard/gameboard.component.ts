@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
+import { DataService } from "../data.service";
 interface Cell {
     isMine: boolean,
     revealed: boolean,
@@ -12,13 +13,18 @@ interface Cell {
     styleUrls: ['./gameboard.component.css']
 })
 export class GameBoardComponent implements OnInit {
-    isBlocking: boolean = false
     board: Cell[][] = [];
-    level: string = ''
+    level: string = '';
     rside: number = 0;
     cside: number = 0;
     noOfMine: number = 0;
-    constructor(private route: ActivatedRoute) { }
+    flagCount: number = 0;
+    timer: any;
+    timeElapsed: number = 0; // Time in seconds
+    isFirstClick: boolean = true;
+    isGameOver: boolean = false;
+    displayTime: string = '00:00';
+    constructor(private route: ActivatedRoute, private dataService: DataService) { }
     ngOnInit() {
         this.route.params.subscribe(params => {
             this.level = params['level'];
@@ -32,7 +38,35 @@ export class GameBoardComponent implements OnInit {
             this.initializeBoard();
         })
     }
+    startTimer() {
+        this.timer = setInterval(() => {
+            this.timeElapsed++;
+            this.updateDisplayTime();
+        }, 1000); // Increment time every second
+    }
+    stopTimer() {
+        if (this.timer) {
+            clearInterval(this.timer);
+        }
+    }
+    updateDisplayTime() {
+        const minutes = Math.floor(this.timeElapsed / 60);
+        const seconds = this.timeElapsed % 60;
+        const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+        const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+        this.displayTime = `${formattedMinutes}:${formattedSeconds}`;
+        this.dataService.updateTimer(this.displayTime);
+    }
     initializeBoard() {
+        this.stopTimer();
+        this.isFirstClick = true;
+        this.isGameOver = false;
+        this.timeElapsed = 0;
+        this.flagCount = this.noOfMine;
+        this.dataService.updateTimer('00:00');
+        this.dataService.updateFlagCount(this.noOfMine);
+        this.dataService.updateGameOver(false);
         let audio1 = new Audio("../../assets/sounds/start.wav")
         audio1.play()
         this.board.length = 0;
@@ -77,16 +111,20 @@ export class GameBoardComponent implements OnInit {
         }
     }
     revealCell(row: number, col: number, is_First = true) {
+        if (this.isGameOver) return;
         if (row >= this.cside || col >= this.rside || row < 0 || col < 0 || this.board[row][col]?.revealed || this.board[row][col]?.isFlaged)
             return;
+        if (this.isFirstClick && !this.isGameOver) {
+            this.isFirstClick = false;
+            this.startTimer(); // Start the timer on first click
+        }
         this.board[row][col].revealed = true;
         if (this.board[row][col]?.isMine) {
-            this.isBlocking = true;
             let audio2 = new Audio("../../assets/sounds/lose_minesweeper.wav");
             audio2.load();
             audio2.play();
+            this.stopTimer(); // Stop the timer if the game is over
             setTimeout(() => { this.gameover() }, 1000);
-            this.isBlocking = false;
         } else if (this.board[row][col]?.count === 0) {
             if (is_First) {
                 let audio3 = new Audio("../../assets/sounds/click.wav");
@@ -100,18 +138,25 @@ export class GameBoardComponent implements OnInit {
             }
             this.won();
         }
-        else { this.won(); }
+        else {
+            this.won();
+        }
     }
     onRightClick(event: MouseEvent, ir: number, ij: number) {
         event.preventDefault();
-        // const selection = window.getSelection();
-        // if (selection) {
-        //     selection.removeAllRanges(); // Clear any selected text
-        // }
-        if (!this.board[ir][ij]?.revealed)
+        if (this.isGameOver) return;
+        if (!this.board[ir][ij]?.revealed) {
+            if (this.board[ir][ij].isFlaged) {
+                this.dataService.updateFlagCount(++this.flagCount);
+            } else {
+                this.dataService.updateFlagCount(--this.flagCount);
+            }
             this.board[ir][ij].isFlaged = !this.board[ir][ij].isFlaged;
+        }
+
     }
     onDoubleClick(row: number, col: number) {
+        if (this.isGameOver) return;
         if (row >= this.cside || col >= this.rside || row < 0 || col < 0 || this.board[row][col]?.isFlaged) {
             return;
         }
@@ -130,21 +175,22 @@ export class GameBoardComponent implements OnInit {
                 for (let dy = -1; dy <= 1; dy++) {
                     if (this.board[row + dx]?.[col + dy]?.isMine && !this.board[row + dx]?.[col + dy]?.isFlaged) {
                         this.board[row + dx][col + dy].revealed = true;
-                        this.isBlocking = true;
                         let audio2 = new Audio("../../assets/sounds/lose_minesweeper.wav");
                         audio2.load();
                         audio2.play();
                         setTimeout(() => { this.gameover() }, 1000);
-                        this.isBlocking = false;
                     }
                     else if (!this.board[row + dx]?.[col + dy]?.isFlaged) {
                         this.revealCell(row + dx, col + dy);
                     }
+
                 }
             }
         }
     }
     gameover() {
+        this.dataService.updateGameOver(true);
+        this.isGameOver = true;
         let i = 0;
         let j = 0;
         const revealMinesRecursively = () => {
@@ -167,7 +213,10 @@ export class GameBoardComponent implements OnInit {
     won() {
         var revealed = document.querySelectorAll(".revealed").length + 1;
         if ((this.rside * this.cside) - revealed === this.noOfMine) {
-            this.isBlocking = true;
+            this.dataService.updateGameOver(true);
+            this.isGameOver = true;
+            this.stopTimer();
+            this.dataService.updateFlagCount(0);
             var audio4 = new Audio("../../assets/sounds/win.wav");
             audio4.load();
             audio4.play();
@@ -186,7 +235,6 @@ export class GameBoardComponent implements OnInit {
                 setTimeout(placeFlag, 5);
             };
             setTimeout(placeFlag, 1000);
-            this.isBlocking = false;
         }
     }
 }

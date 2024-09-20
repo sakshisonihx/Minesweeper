@@ -7,15 +7,13 @@ import { GameBoardComponent } from './gameboard/gameboard.component';
 import { DialogComponent, HomeComponent } from './homepage/home.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ClickBlockerComponent } from './clickblocker.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
     HomeComponent,
-    DialogComponent,
-    ClickBlockerComponent
+    DialogComponent
   ],
   imports: [
     AppRoutingModule,
